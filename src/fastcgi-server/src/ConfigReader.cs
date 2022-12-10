@@ -33,6 +33,10 @@ namespace FastCgi
 			if (_validator.Validate(parameters))
 			{
 				config = _validator.Config;
+				Console.WriteLine("--Config analysis--");
+				Console.WriteLine($"Ip: {config.IP}");
+				Console.WriteLine($"Port: {config.Port}");
+				Console.WriteLine($"App Folder: {config.AppFolder}");
 				return true;
 			}
 

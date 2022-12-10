@@ -1,90 +1,92 @@
-using System;
-
-namespace FastCgi
+namespace fastcgi_server
 {
 	struct Config
 	{
-		[IPValidation(typeof(string))]
+		[IPValidation]
 		public string IP;
 
-		[PortValidation(typeof(string))]
+		[PortValidation]
 		public string Port;
 
-		[AppFolderValidation(typeof(string))]
+		[AppFolderValidation]
 		public string AppFolder;
 	}
 
 	[AttributeUsage(AttributeTargets.Field)]
 	abstract class ValidationAttribute : Attribute
 	{
-		public Type Type { get => _type; }
-		protected Type _type;
-
-		public abstract bool TryValidate(string name, string value, out object result);
+		public abstract bool Validate(string value);
+		
+		protected void PrintError(string message)
+		{
+			Console.WriteLine(message + $" : {this}");
+		}
 	}
 
 	class IPValidationAttribute : ValidationAttribute
 	{
-		public string IP { get; } = "";
-
-		public IPValidationAttribute(Type type)
+		public override bool Validate(string value)
 		{
-			_type = type;
-		}
+			string[] split = value.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
-		public override bool TryValidate(string name, string value, out object result)
-		{
-			result = false;
-			if (name != "ip")
+			if (split.Length != 4)
 			{
+				PrintError("IP address must be in dotted-decimal format");
 				return false;
 			}
 
-			result = value;
+			foreach (var part in split)
+			{
+				if (part.Length > 3)
+				{
+					PrintError("IP address must be in dotted-decimal format");
+					return false;
+				}
+
+				foreach (var ch in part)
+				{
+					if (!char.IsDigit(ch))
+					{
+						PrintError("IP address must be in dotted-decimal format");
+						return false;
+					}
+				}
+
+				int decimalValue = Int32.Parse(part);
+				if (decimalValue < 0 || decimalValue > 255)
+				{
+					PrintError("IP address must be in dotted-decimal format");
+					return false;
+				}
+			}
+			
 			return true;
 		}
 	}
 
 	class PortValidationAttribute : ValidationAttribute
 	{
-		public string Port { get; } = "";
-
-		public PortValidationAttribute(Type type)
+		public override bool Validate(string value)
 		{
-			_type = type;
-		}
-
-		public override bool TryValidate(string name, string value, out object result)
-		{
-			result = false;
-			if (name != "port")
+			if (value.Length == 0 || value.Length > 5)
 			{
-				return false;
+				PrintError("A port number is a 16-bit unsigned integer, thus ranging from 0 to 65535.");
 			}
-
-			result = value;
+			
 			return true;
 		}
 	}
 
 	class AppFolderValidationAttribute : ValidationAttribute
 	{
-		public string AppFolder { get; } = "";
-
-		public AppFolderValidationAttribute(Type type)
+		public override bool Validate(string value)
 		{
-			_type = type;
-		}
-
-		public override bool TryValidate(string name, string value, out object result)
-		{
-			result = false;
-			if (name != "--app")
+			if (!Directory.Exists(value))
 			{
+				PrintError("Directory doesn't exits");
 				return false;
 			}
-
-			result = value;
+			
 			return true;
 		}
 	}

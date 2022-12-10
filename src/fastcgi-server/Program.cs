@@ -19,7 +19,6 @@ namespace fastcgi_server
                 Console.WriteLine(config.IP);
                 Console.WriteLine(config.Port);
                 Console.WriteLine(config.AppFolder);
-
                 return 0;
             }
             return -1;
@@ -34,29 +33,34 @@ namespace fastcgi_server
 
     class ConfigValidator : IConfigValidator
     {
-        public Config Config { get ; }
+        public Config Config { get; private set; }
 
         public bool Validate(Dictionary<string, string> parameters)
         {
+            object result = Config;
             Type configType = typeof(Config);
 
             foreach (var p in parameters)
             {
-                foreach (FieldInfo field in configType.GetFields())
+                foreach (FieldInfo field in configType.GetFields(BindingFlags.Public | BindingFlags.Instance))
                 {
-                    object[] attributes = field.GetCustomAttributes(false);
-
-                    foreach (Attribute attr in attributes)
+                    if (field.Name.ToLower() != p.Key.ToLower())
                     {
-                        if (attr is ValidationAttribute validationAttribute)
-                            if (validationAttribute.TryValidate(p.Key, p.Value, out var result))
-                            {
-                                Console.WriteLine(result);
-                                field.SetValue(Config, Convert.ChangeType(result, validationAttribute.Type));
-                            }
+                        continue;
+                    }
+                    
+                    object[] attributes = field.GetCustomAttributes(false);
+                    foreach (ValidationAttribute attr in attributes)
+                    {
+                        if (attr.Validate(p.Value))
+                            field.SetValue(result, p.Value);
+                        else
+                            return false;
                     }
                 }
             }
+
+            Config = (Config)result;
             return true;
         }
     }
