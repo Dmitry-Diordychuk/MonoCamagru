@@ -1,7 +1,6 @@
-using System;
-using fastcgi_server;
+using fastcgi_server.Parser;
 
-namespace FastCgi
+namespace fastcgi_server
 {
 	class ConfigReader
 	{
@@ -21,8 +20,8 @@ namespace FastCgi
 			var parameters = _parser.Parse(input);
 
 			config.AppFolder = "";
-			config.IP = "";
-			config.Port = "";
+			config.IP = new [] { -1, -1, -1, -1 };
+			config.Port = -1;
 
 			if (parameters.ContainsKey("help"))
 			{
@@ -33,10 +32,6 @@ namespace FastCgi
 			if (_validator.Validate(parameters))
 			{
 				config = _validator.Config;
-				Console.WriteLine("--Config analysis--");
-				Console.WriteLine($"Ip: {config.IP}");
-				Console.WriteLine($"Port: {config.Port}");
-				Console.WriteLine($"App Folder: {config.AppFolder}");
 				return true;
 			}
 

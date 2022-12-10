@@ -1,19 +1,17 @@
-using FastCgi;
-
 namespace fastcgi_server.Parser
 {
-	class ConfigParser : IConfigParser
+	class Parser : IConfigParser
 	{
-		private readonly Dictionary<string, Func<string, List<(string, string)>>> _parsers = new ();
+		private readonly Dictionary<string, Func<string, List<(string, object)>>> _parsers = new ();
 
 		public void AddArgParser(IArgParser argParser)
 		{
 			_parsers[argParser.Flag] = argParser.ParseValue;
 		}
 
-		public Dictionary<string, string> Parse(string[] args)
+		public Dictionary<string, object> Parse(string[] args)
 		{
-			var parameters = new Dictionary<string, string>();
+			var parameters = new Dictionary<string, object>();
 
 			for (int i = 0; i < args.Length; i++)
 			{

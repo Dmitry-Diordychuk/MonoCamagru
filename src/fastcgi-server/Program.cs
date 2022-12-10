@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using FastCgi;
+﻿using System.Net;
 using fastcgi_server.Parser;
 
 namespace fastcgi_server
@@ -8,60 +7,40 @@ namespace fastcgi_server
     {
         public static int Main(string[] args)
         {
-            var parser = new ConfigParser();
+            var parser = new Parser.Parser();
             parser.AddArgParser(new ListenParser());
             parser.AddArgParser(new AppParser());
             parser.AddArgParser(new HelpParser());
 
-            var reader = new ConfigReader(parser, new ConfigValidator());
+            var reader = new ConfigReader(parser, new Validator());
             if (reader.TryRead(args, out Config config))
             {
-                Console.WriteLine(config.IP);
-                Console.WriteLine(config.Port);
-                Console.WriteLine(config.AppFolder);
+                CGIServer cgiServer = new CGIServer(config);
+                cgiServer.Run();
                 return 0;
             }
             return -1;
         }
     }
 
-    interface IConfigValidator
+    internal class CGIServer
     {
-        Config Config { get; }
-        bool Validate(Dictionary<string, string> parameters);
-    }
-
-    class ConfigValidator : IConfigValidator
-    {
-        public Config Config { get; private set; }
-
-        public bool Validate(Dictionary<string, string> parameters)
+        private Config _config;
+        private bool _isUp;
+        
+        public CGIServer(Config config)
         {
-            object result = Config;
-            Type configType = typeof(Config);
+            _config = config;
+        }
 
-            foreach (var p in parameters)
-            {
-                foreach (FieldInfo field in configType.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                {
-                    if (field.Name.ToLower() != p.Key.ToLower())
-                    {
-                        continue;
-                    }
-                    
-                    object[] attributes = field.GetCustomAttributes(false);
-                    foreach (ValidationAttribute attr in attributes)
-                    {
-                        if (attr.Validate(p.Value))
-                            field.SetValue(result, p.Value);
-                        else
-                            return false;
-                    }
-                }
-            }
-
-            Config = (Config)result;
-            return true;
+        public void Run()
+        {
+            Console.WriteLine("Server run");
+            // _isUp = true;
+            // while (_isUp)
+            // {
+            //     IPEndPoint ipPoint = new IPEndPoint()
+            // }
         }
     }
 }
