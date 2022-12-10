@@ -1,0 +1,17 @@
+fastcgi-mono-server4 --applications=/:/var/www/www.monocamagru.ru/ --socket=tcp:127.0.0.1:9000
+
+2022-12-	PATH_INFO					(
+			SCRIPT_FILENAME				/var/www/www.monocamagru.ru/Default.aspx
+			HTTP_USER_AGENT				PostmanRuntime /7.29.2
+			HTTP_ACCEPT					*/*$
+			HTTP_POSTMAN_TOKEN			ee3ec016-91bc-41e4-ba24-a2ef6399e626
+			HTTP_HOST					localhost:8080
+			HTTP_ACCEPT_ENCODING 		gzip, deflate, br
+
+2022-12-	PATH_INFO					(
+			SCRIPT_FILENAME				/var/www/www.monocamagru.ru/Default.aspx
+			HTTP_USER_AGENT				PostmanRuntime/7.29.2
+			HTTP_ACCEPT					*/*$
+			HTTP_POSTMAN_TOKEN			8148d30e-ce6b-4c87-8c40-da87b9d1c065
+			HTTP_HOST					localhost:8080
+			HTTP_ACCEPT_ENCODING		gzip, deflate, br

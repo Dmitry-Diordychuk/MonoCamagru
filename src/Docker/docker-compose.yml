@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+
+  nginx:
+    image: kdustin/nginx
+    ports:
+      - "8080:80"
+    environment:
+      - MONO_PORT=9000
+
+  mono:
+    image: kdustin/fastcgi-mono-server
+    volumes:
+      - ./../www.monocamagru.ru:/var/www/www.monocamagru.ru
+    depends_on:
+      - nginx
+
+    #- ./fastcgi_params:/etc/nginx/fastcgi_params:ro
+    #ports:
+    #- "8080:80"
+    #command: [nginx-debug, '-g', 'daemon off;']
+
+
+  # mongo:
+  #     image: mongo
+  #     restart: always
+  #     environment:
+  #       MONGO_INITDB_ROOT_USERNAME: root
+  #       MONGO_INITDB_ROOT_PASSWORD: example
+
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: example
+  #     ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+# volumes:
+#   mariadb:
+#     driver: local
+#     driver_opts:
+#       type: 'none'
+#       device: '/home/kdustin/data/mariadb'
+#       o: 'bind'
+#   wordpress:
+#     driver: local
+#     driver_opts:
+#       type: 'none'
+#       device: '/home/kdustin/data/wordpress'
+#       o: 'bind'
