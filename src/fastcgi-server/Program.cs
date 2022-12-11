@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Sockets;
 using fastcgi_server.Parser;
 
 namespace fastcgi_server
@@ -15,7 +16,7 @@ namespace fastcgi_server
             var reader = new ConfigReader(parser, new Validator());
             if (reader.TryRead(args, out Config config))
             {
-                CGIServer cgiServer = new CGIServer(config);
+                CgiServer cgiServer = new CgiServer(config);
                 cgiServer.Run();
                 return 0;
             }
@@ -23,12 +24,12 @@ namespace fastcgi_server
         }
     }
 
-    internal class CGIServer
+    internal class CgiServer
     {
         private Config _config;
         private bool _isUp;
         
-        public CGIServer(Config config)
+        public CgiServer(Config config)
         {
             _config = config;
         }
@@ -39,7 +40,14 @@ namespace fastcgi_server
             // _isUp = true;
             // while (_isUp)
             // {
-            //     IPEndPoint ipPoint = new IPEndPoint()
+            IPEndPoint ipPoint = new IPEndPoint(
+                new IPAddress(Array.ConvertAll(_config.IP, i => (byte)i)),
+                _config.Port);
+            using Socket socket = new Socket(
+                AddressFamily.InterNetwork,
+                SocketType.Stream,
+                ProtocolType.Tcp);
+
             // }
         }
     }

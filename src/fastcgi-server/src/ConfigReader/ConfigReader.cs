@@ -19,7 +19,7 @@ namespace fastcgi_server
 		{
 			var parameters = _parser.Parse(input);
 
-			config.AppFolder = "";
+			config.AppFolder = "none";
 			config.IP = new [] { -1, -1, -1, -1 };
 			config.Port = -1;
 
