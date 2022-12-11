@@ -1,6 +1,7 @@
-using fastcgi_server.Parser;
+using fastcgi_server.ConfigReader.Parser;
+using fastcgi_server.ConfigReader.Validator;
 
-namespace fastcgi_server
+namespace fastcgi_server.ConfigReader
 {
 	class ConfigReader
 	{

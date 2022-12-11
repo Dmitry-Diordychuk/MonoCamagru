@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace fastcgi_server;
+namespace fastcgi_server.ConfigReader.Validator;
 
 class Validator : IConfigValidator
 {

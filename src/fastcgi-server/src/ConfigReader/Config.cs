@@ -1,4 +1,6 @@
-namespace fastcgi_server
+using fastcgi_server.ConfigReader.Validator;
+
+namespace fastcgi_server.ConfigReader
 {
 	struct Config
 	{

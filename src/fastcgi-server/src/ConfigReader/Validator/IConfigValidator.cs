@@ -1,4 +1,4 @@
-namespace fastcgi_server;
+namespace fastcgi_server.ConfigReader.Validator;
 
 interface IConfigValidator
 {

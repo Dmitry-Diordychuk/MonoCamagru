@@ -1,4 +1,4 @@
-namespace fastcgi_server.Parser
+namespace fastcgi_server.ConfigReader.Parser
 {
 	class ListenParser : IArgParser
 	{

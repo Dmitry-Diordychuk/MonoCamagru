@@ -6,14 +6,22 @@ services:
     ports:
       - "8080:80"
     environment:
-      - MONO_PORT=9000
-
-  mono:
-    image: kdustin/fastcgi-mono-server
-    volumes:
-      - ./../www.monocamagru.ru:/var/www/www.monocamagru.ru
+      - IP=fastcgi-server
+      - PORT=9000
     depends_on:
-      - nginx
+        - fastcgi-server
+
+  # mono:
+    # image: kdustin/fastcgi-mono-server
+    # volumes:
+      # - ./../www.monocamagru.ru:/var/www/www.monocamagru.ru
+    # depends_on:
+      # - nginx
+
+  fastcgi-server:
+    image: kdustin/fastcgi-server
+    volumes:
+        - ./../www.monocamagru.ru:/var/www/www.monocamagru.ru
 
     #- ./fastcgi_params:/etc/nginx/fastcgi_params:ro
     #ports:

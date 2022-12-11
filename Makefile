@@ -5,7 +5,7 @@ all: down clear build up
 
 build:
 	docker build --tag kdustin/nginx				./src/Docker/nginx/
-	docker build --tag kdustin/fastcgi-mono-server	./src/Docker/fastcgi-mono-server/
+	docker build --tag kdustin/fastcgi-server		./src/fastcgi-server/
 
 up:
 	cd ./src/Docker ; docker-compose up -d
