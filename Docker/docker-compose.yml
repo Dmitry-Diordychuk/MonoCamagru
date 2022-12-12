@@ -11,13 +11,6 @@ services:
     depends_on:
         - fastcgi-server
 
-  # mono:
-    # image: kdustin/fastcgi-mono-server
-    # volumes:
-      # - ./../www.monocamagru.ru:/var/www/www.monocamagru.ru
-    # depends_on:
-      # - nginx
-
   fastcgi-server:
     image: kdustin/fastcgi-server
     volumes:

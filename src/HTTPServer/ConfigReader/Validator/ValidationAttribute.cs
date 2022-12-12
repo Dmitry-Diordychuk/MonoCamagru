@@ -1,4 +1,4 @@
-namespace fastcgi_server.ConfigReader.Validator;
+namespace MonoCamagru.HTTPServer.ConfigReader.Validator;
 
 [AttributeUsage(AttributeTargets.Field)]
 abstract class ValidationAttribute : Attribute

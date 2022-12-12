@@ -1,17 +1,17 @@
-using System;
+using MonoCamagru.Logger;
 
-namespace MonoCamagru
+namespace MonoCamagru.Application
 {
 class Application
 {
-	private Logger _logger;
-	private Logger _stdout;
+	private Logger.Logger _logger;
+	private Logger.Logger _stdout;
 
 	private bool _isRunning;
 
-	public Application(Logger logger)
+	public Application(Logger.Logger logger)
 	{
-		_stdout = new Logger(new ConsoleStdOut());
+		_stdout = new Logger.Logger(new ConsoleStdOut());
 		_logger = logger;
 
 		if (_logger == null)

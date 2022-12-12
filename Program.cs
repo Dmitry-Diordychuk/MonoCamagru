@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using fastcgi_server.ConfigReader;
-using fastcgi_server.ConfigReader.Parser;
-using fastcgi_server.ConfigReader.Validator;
+using MonoCamagru.HTTPServer.ConfigReader;
+using MonoCamagru.HTTPServer.ConfigReader.Parser;
+using MonoCamagru.HTTPServer.ConfigReader.Validator;
 
-namespace fastcgi_server
+namespace MonoCamagru
 {
     internal abstract class Program
     {
@@ -15,7 +15,7 @@ namespace fastcgi_server
             parser.AddArgParser(new AppParser());
             parser.AddArgParser(new HelpParser());
 
-            var reader = new ConfigReader.ConfigReader(parser, new Validator());
+            var reader = new ConfigReader(parser, new Validator());
             if (reader.TryRead(args, out Config config))
             {
                 CgiServer cgiServer = new CgiServer(config);

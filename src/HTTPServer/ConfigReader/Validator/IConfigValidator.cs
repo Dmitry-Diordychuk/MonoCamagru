@@ -1,4 +1,4 @@
-namespace fastcgi_server.ConfigReader.Validator;
+namespace MonoCamagru.HTTPServer.ConfigReader.Validator;
 
 interface IConfigValidator
 {

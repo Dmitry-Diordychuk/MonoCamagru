@@ -1,6 +1,6 @@
-using fastcgi_server.ConfigReader.Validator;
+using MonoCamagru.HTTPServer.ConfigReader.Validator;
 
-namespace fastcgi_server.ConfigReader
+namespace MonoCamagru.HTTPServer.ConfigReader
 {
 	struct Config
 	{

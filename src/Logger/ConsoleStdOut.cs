@@ -1,6 +1,4 @@
-using System;
-
-namespace MonoCamagru
+namespace MonoCamagru.Logger
 {
 class ConsoleStdOut : ILoggerOut
 {

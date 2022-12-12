@@ -1,4 +1,4 @@
-namespace fastcgi_server.ConfigReader.Parser
+namespace MonoCamagru.HTTPServer.ConfigReader.Parser
 {
 	class Parser : IConfigParser
 	{

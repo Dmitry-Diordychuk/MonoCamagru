@@ -1,4 +1,4 @@
-namespace MonoCamagru
+namespace MonoCamagru.Logger
 {
 interface ILoggerOut
 {
