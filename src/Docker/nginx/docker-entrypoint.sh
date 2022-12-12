@@ -12,6 +12,6 @@
 # 		-keyout /etc/ssl/private/nginx-selfsigned.key \
 # 		-out /etc/ssl/certs/nginx-selfsigned.crt;
 
-sed -i -e "s/<MONO IP>/$(dig +short mono):${MONO_PORT}/g" /etc/nginx/nginx.conf
+sed -i -e "s/<MONO IP>/$(dig +short ${IP}):${PORT}/g" /etc/nginx/nginx.conf
 
 nginx -g "daemon off;"

@@ -53,6 +53,7 @@ namespace fastcgi_server
                     // получаем подключение в виде TcpClient
                     using var tcpClient = await server.AcceptTcpClientAsync();
                     Console.WriteLine($"Входящее подключение: {tcpClient.Client.RemoteEndPoint}");
+                    Console.WriteLine();
                 }
             }
             catch (Exception e)
